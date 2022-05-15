@@ -1,5 +1,5 @@
 import pygame
-import pygame_plot as pgplot
+from lib import pygame_plt as pgplot
 import numpy as np
 
 pygame.init()
@@ -36,10 +36,8 @@ def main():
         draw_window()
         plt = pgplot.Plot(surface=WIN)
         plt.position(0, 600, 0, 600)
-        plt.fit(0.5)
 
         plt.scatter(x=x_data, y=y_data)
-
 
     pygame.quit()
 
