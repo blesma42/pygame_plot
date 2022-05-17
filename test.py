@@ -35,8 +35,8 @@ def main():
 
         draw_window()
         plt = pgplot.Plot(surface=WIN)
-        plt.position(0, 600, 0, 600)
-
+        plt.position(100, 500, 100, 500)
+        plt.mouse_tracker(True)
         plt.scatter(x=x_data, y=y_data)
 
     pygame.quit()

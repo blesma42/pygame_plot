@@ -14,6 +14,6 @@ def coords_reversed(self, x, y):
     self.y_unit_rev = self.y_range/self.hight
 
     x_scaled = (x-self.left)*self.x_unit_rev+self.x_min
-    y_scaled = (y-self.top)*self.y_unit_rev
+    y_scaled = (self.bottom-y)*self.y_unit_rev+self.y_min
 
-    return (x_scaled, self.y_scaled)
+    return (x_scaled, y_scaled)

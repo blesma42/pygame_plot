@@ -2,9 +2,10 @@ import pygame
 import coordinate_converter as cc
 import fit
 import position
-import scatter
 import x_axis
 import y_axis
+import mouse_position
+import scatter
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -13,7 +14,7 @@ GREY = (50, 50, 50)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
-
+ORANGE = (255, 165, 0)
 
 class Plot:
     def __init__(self, surface: pygame.Surface):
@@ -36,7 +37,8 @@ class Plot:
         
         self.x_axis()
         self.y_axis()
-
+        
+        self.mouse_tracker()
 
     def position(self, top: int, bottom: int, left: int, right: int):
         '''Sets the position of the plot within the pygame window. Requires four arguments in pygame coordinates: top, bottom, left, right'''
@@ -62,6 +64,10 @@ class Plot:
         '''Convertes regular grid coordinates to pygame coordinates'''
         return cc.coords(self, x, y)
 
+    def coords_reversed(self, x, y):
+        '''Convertes pygame coordinates to grid coordinates'''
+        return cc.coords_reversed(self, x, y)
+
     def x_axis(self):
         '''Creates and formats x_axis.'''
         self.x_axis = x_axis.x_axis(self, min=self.x_min, max=self.x_max, ticks=self.x_ticks)
@@ -71,12 +77,16 @@ class Plot:
         self.y_axis = y_axis.y_axis(self, min=self.y_min, max=self.y_max, ticks=self.y_ticks)
 
     def x_grid(self, draw=True, number_of_lines=10, color=BLACK):
+        '''Draws grid on x-axis''' 
         self.x_axis.grid(draw, number_of_lines, color)
 
     def y_grid(self, draw=True, number_of_lines=10, color=BLACK):
         '''Draws grid on y-axis'''   
         self.y_axis.grid(draw, number_of_lines, color)
      
+    def mouse_tracker(self, show=False, font='arial', font_size=12, font_color=BLACK, background_color=ORANGE, distance=30):
+        self.mouse_position_tracker = mouse_position.mouse_tracker(self, show, font, font_size, font_color, background_color, distance)
+
     def scatter(self, x, y, shape='cross', color=BLUE, size=10):
         '''Draws an scatter plot from given x and y. x and y must be iterables with equal lenght.'''
         scatter.scatter(self, x, y, shape='cross', color=BLUE, size=10)
@@ -86,3 +96,4 @@ class Plot:
 
         self.x_axis.draw()
         self.y_axis.draw()
+        self.mouse_position_tracker.draw()
